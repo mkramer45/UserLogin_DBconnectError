@@ -1,0 +1,41 @@
+{% extends "template.html" %}
+{% block content %}
+<h1> Enter the Artists you want to monitor!</h1>
+<form method="POST" action="/scrapelist2">
+   <table>
+      <tr>
+         <td style="padding-right: 10px">Artist Name</td>
+         <td><input type="text" name="Producername" /></td>
+		 <td><input type="submit" value="Submit!" /></td>
+      </tr>
+   </table>
+</form>
+<h2>Your Beatscrape Artists</h2>
+{% for message in get_flashed_messages() %}
+<div class="alert alert-success">{{ message }}</div>
+{% endfor %}
+<table class="table table-striped table-bordered table-hover table condensed">
+{% for artist in pull %}
+<tr>
+   <td>{{ artist.DJname }}</td>
+   <td>
+      <form method="post" action="/delete_artist/{{ artist.DJname }}">
+         <input type="hidden" name="_method" value="DELETE">
+         <input type="submit" value="Delete" class="btn btn-danger">
+      </form>
+   </td>
+</tr>
+{% endfor %}
+</table>
+<h3>ArtistWatch List</h3>
+<table class="table table-striped table-bordered table-hover table condensed">
+{% for x in watch %}
+<tr>
+   <td>{{ x.Artist }}</td>
+   <td>{{ x.Song }}</td>
+   <td>{{ x.Websource }}</td>
+   <td>{{ x.Genre }}</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}
